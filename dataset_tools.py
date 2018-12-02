@@ -24,10 +24,12 @@ def import_dataset(mode):
 
 def create_dataset_from_slices(validation_ratio=config.validate_percentage, test_ration=config.test_percentage, slices_per_genre=None):
     assert validation_ratio + test_ration < 0.99
+    print("started")
     start_time = time()
     data = []
 
     for genre in genres:
+        print("genre:",genre)
         file_names = [file for file in glob.glob(pickles_directory+slice_by_genre_name % genre)]
         file_names = file_names[:slices_per_genre]
 
