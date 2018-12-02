@@ -20,14 +20,14 @@ ram_to_use = 8000 # in MB
 batch_size = int(ram_to_use/size_of_single_pickle)
 no_of_epochs = 20
 
-train_percentage = 0.5
+train_percentage = 0.7
 test_percentage = 0.25
-validate_percentage = 0.25
+validate_percentage = 0.05
 
 slice_by_genre_name = "%s_*_*.pckl"
 slice_name = "%s_%d_%d.pckl"
 root_directory = "/home/cleptes/Programming/Python/ml_genre_classification/"
-pickles_directory = root_directory+"pickles/"
+pickles_directory = "/home/cleptes/Programming/Python/genre_classification_data/splits/"
 dataset_directory = root_directory+"datasets/"
 model_directory = root_directory+"model/"
 log_file_training = root_directory+"logs/train.log"
