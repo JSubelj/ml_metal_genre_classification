@@ -16,7 +16,7 @@ no_of_samples_per_split = 1000
 no_of_coef_per_sample = 13
 
 size_of_single_pickle = 0.100 # aprox. in MB
-ram_to_use = 8000 # in MB
+ram_to_use = 2000 # in MB
 batch_size = int(ram_to_use/size_of_single_pickle)
 no_of_epochs = 20
 
@@ -26,10 +26,11 @@ validate_percentage = 0.05
 
 slice_by_genre_name = "%s_*_*.pckl"
 slice_name = "%s_%d_%d.pckl"
-root_directory = "/home/cleptes/Programming/Python/ml_genre_classification/"
+root_directory = "/home/cleptes/Programming/Python/ml_metal_genre_classification/"
 pickles_directory = "/home/cleptes/Programming/Python/genre_classification_data/splits/"
 dataset_directory = root_directory+"datasets/"
 model_directory = root_directory+"model/"
+intermed_model_directory = root_directory+"intermed_model/"
 log_file_training = root_directory+"logs/train.log"
 log_file_validating = root_directory+"logs/validate.log"
 log_file_ds_creation = root_directory+"logs/ds_creation.log"

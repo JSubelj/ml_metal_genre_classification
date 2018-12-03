@@ -6,16 +6,23 @@ import random
 import numpy as np
 import pickle
 from time import time
+
+
+
 def save_dataset(train_X, train_y, test_X, test_y, validation_X, validation_y):
     pickle.dump((train_X, train_y), open(config.dataset_directory+config.dataset_name % "train", "wb"))
     pickle.dump((test_X, test_y), open(config.dataset_directory+config.dataset_name % "test", "wb"))
     pickle.dump((validation_X, validation_y), open(config.dataset_directory+config.dataset_name % "validate", "wb"))
 
 def import_dataset(mode):
+    assert mode == "train" or mode == "test" or mode == "validate"
     if mode == "train":
         train_X, train_y = pickle.load(open(config.dataset_directory+config.dataset_name % "train", "rb"))
+        return train_X, train_y
+
+    if mode == "test":
         test_X, test_y = pickle.load(open(config.dataset_directory+config.dataset_name % "test", "rb"))
-        return train_X, train_y, test_X, test_y
+        return test_X, test_y
 
     if mode == "validate":
         validation_X, validation_y = pickle.load(open(config.dataset_directory+config.dataset_name % "validate", "rb"))
@@ -37,9 +44,9 @@ def create_dataset_from_slices(validation_ratio=config.validate_percentage, test
         print(len(file_names), "of files for genre", genre)
         # label genre array len(label) == len(genre) 1 for genre 0 for others
         for file_name in file_names:
-            slice_data = pickle.load(open(file_name, "rb"))
+            #slice_data = pickle.load(open(file_name, "rb"))
             label = [1. if genre == g else 0. for g in genres]
-            data.append((slice_data,label))
+            data.append((file_name,label))
 
     random.shuffle(data)
 
@@ -49,11 +56,14 @@ def create_dataset_from_slices(validation_ratio=config.validate_percentage, test
     no_for_test = int(len(X)*test_ration)
     no_for_train = len(X) - (no_for_validation+no_for_test)
 
-    train_X = np.array(X[:no_for_train]).reshape([-1, no_of_samples_per_split, no_of_coef_per_sample, 1])
+    #train_X = np.array(X[:no_for_train]).reshape([-1, no_of_samples_per_split, no_of_coef_per_sample, 1])
+    train_X = X[:no_for_train]
     train_y = np.array(y[:no_for_train])
-    validation_X = np.array(X[no_for_train:no_for_train+no_for_validation]).reshape([-1, no_of_samples_per_split, no_of_coef_per_sample, 1])
+    #validation_X = np.array(X[no_for_train:no_for_train+no_for_validation]).reshape([-1, no_of_samples_per_split, no_of_coef_per_sample, 1])
+    validation_X = X[no_for_train:no_for_train+no_for_validation]
     validation_y = np.array(y[no_for_train:no_for_train+no_for_validation])
-    test_X = np.array(X[-no_for_test:]).reshape([-1, no_of_samples_per_split, no_of_coef_per_sample, 1])
+    #test_X = np.array(X[-no_for_test:]).reshape([-1, no_of_samples_per_split, no_of_coef_per_sample, 1])
+    test_X = X[-no_for_test:]
     test_y = np.array(y[-no_for_test:])
 
     save_dataset(train_X, train_y, test_X, test_y, validation_X, validation_y)
